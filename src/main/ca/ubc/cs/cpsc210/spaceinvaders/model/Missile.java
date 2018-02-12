@@ -5,13 +5,13 @@ import java.awt.Color;
 /*
  * Represents a missile.
  */
-public class Missile {
-	
+public class Missile extends SIGame{
+
 	public static final int SIZE_X = 5;
 	public static final int SIZE_Y = 9;
 	public static final int DY = -2;
 	public static final Color COLOR = new Color(128, 50, 20);
-	
+
 	private int x;
 	private int y;
 
@@ -20,11 +20,11 @@ public class Missile {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public int getX() {
 		return x;
 	}
-	
+
 	public int getY() {
 		return y;
 	}
