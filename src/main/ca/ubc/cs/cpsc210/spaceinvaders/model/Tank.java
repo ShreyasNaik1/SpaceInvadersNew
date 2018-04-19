@@ -13,7 +13,7 @@ public class Tank {
 	private int x;
 	public static final int Y_POS = SIGame.HEIGHT - 40;
 	public static final Color COLOR = new Color(250, 128, 20);
-	private int direction;
+	public int direction;
 
 
 	// EFFECTS: places tank at position (x, Y_POS) moving right.

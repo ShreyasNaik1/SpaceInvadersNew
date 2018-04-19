@@ -75,7 +75,12 @@ public class SpaceInvaders extends JFrame {
 		public void keyPressed(KeyEvent e) {
 			game.keyPressed(e.getKeyCode());
 		}
-	}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			game.keyReleased(e.getKeyCode());
+		}
+}
 
 	// Play the game
 	public static void main(String[] args) {

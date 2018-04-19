@@ -17,70 +17,72 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Unit tests for the Game class.
  */
 public class GameTest {
-	private SIGame siGame;
+	private SIGame game;
 	
 	@BeforeEach
 	public void runBefore() {
-		siGame = new SIGame();
+		game = new SIGame();
 	}
 	
 	@Test
 	public void testConstructor() {
-		Tank t = siGame.getTank();
+		Tank t = game.getTank();
 		assertEquals(SIGame.WIDTH / 2, t.getX());
-		List<Invader> invaders = siGame.getInvaders();
+		List<Invader> invaders = game.getInvaders();
 		assertEquals(0, invaders.size());
-		List<Missile> missiles = siGame.getMissiles();
+		List<Missile> missiles = game.getMissiles();
 		assertEquals(0, missiles.size());
 	}
 	
 	@Test
 	public void testUpdate() {
-		Tank t = siGame.getTank();
+		Tank t = game.getTank();
 		assertEquals(SIGame.WIDTH / 2, t.getX());
-		siGame.update();
+        game.keyPressed(KeyEvent.VK_RIGHT);
+		game.update();
 		assertEquals(SIGame.WIDTH / 2 + Tank.DX, t.getX());
-		siGame.update();
+        game.keyPressed(KeyEvent.VK_RIGHT);
+		game.update();
 		assertEquals(SIGame.WIDTH / 2 + 2 * Tank.DX, t.getX());
-		assertEquals(0, siGame.getMissiles().size());
+		assertEquals(0, game.getMissiles().size());
 	}
 	
 	@Test
 	public void testNonKeyPadKeyEvent() {
-		Tank t = siGame.getTank();
-		siGame.keyPressed(KeyEvent.VK_LEFT);
-		siGame.update();
+		Tank t = game.getTank();
+		game.keyPressed(KeyEvent.VK_LEFT);
+		game.update();
 		assertEquals(SIGame.WIDTH / 2 - Tank.DX, t.getX());
-		siGame.update();
+		game.update();
 		assertEquals(SIGame.WIDTH / 2 - 2 * Tank.DX, t.getX());
-		siGame.keyPressed(KeyEvent.VK_RIGHT);
-		siGame.update();
+		game.keyPressed(KeyEvent.VK_RIGHT);
+		game.update();
 		assertEquals(SIGame.WIDTH / 2 - Tank.DX, t.getX());
-		siGame.update();
+		game.update();
 		assertEquals(SIGame.WIDTH / 2, t.getX());		
 	}
 	
 	@Test
 	public void testKeyPadKeyEvent() {
-		Tank t = siGame.getTank();
-		siGame.keyPressed(KeyEvent.VK_KP_LEFT);
-		siGame.update();
+		Tank t = game.getTank();
+		game.keyPressed(KeyEvent.VK_KP_LEFT);
+		game.update();
 		assertEquals(SIGame.WIDTH / 2 - Tank.DX, t.getX());
-		siGame.update();
+		game.update();
 		assertEquals(SIGame.WIDTH / 2 - 2 * Tank.DX, t.getX());
-		siGame.keyPressed(KeyEvent.VK_KP_RIGHT);
-		siGame.update();
+		game.keyPressed(KeyEvent.VK_KP_RIGHT);
+		game.update();
 		assertEquals(SIGame.WIDTH / 2 - Tank.DX, t.getX());
-		siGame.update();
+		game.update();
 		assertEquals(SIGame.WIDTH / 2, t.getX());		
 	}
 	
 	@Test
 	public void testSpaceKeyEvent() {
-		siGame.keyPressed(KeyEvent.VK_SPACE);
-		assertEquals(1, siGame.getMissiles().size());
-		siGame.keyPressed(KeyEvent.VK_SPACE);
-		siGame.keyPressed(KeyEvent.VK_SPACE);
-		assertEquals(3, siGame.getMissiles().size());
+		game.keyPressed(KeyEvent.VK_SPACE);
+		assertEquals(1, game.getMissiles().size());
+		game.keyPressed(KeyEvent.VK_SPACE);
+		game.keyPressed(KeyEvent.VK_SPACE);
+		assertEquals(3, game.getMissiles().size());
 	}
 }

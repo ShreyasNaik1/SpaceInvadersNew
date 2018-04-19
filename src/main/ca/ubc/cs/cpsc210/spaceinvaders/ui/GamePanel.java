@@ -9,6 +9,8 @@ import ca.ubc.cs.cpsc210.spaceinvaders.model.Invader;
 import ca.ubc.cs.cpsc210.spaceinvaders.model.Missile;
 import ca.ubc.cs.cpsc210.spaceinvaders.model.Tank;
 
+import static ca.ubc.cs.cpsc210.spaceinvaders.ui.ScorePanel.currentHighScore;
+
 /*
  * The panel in which the game is rendered.
  */
@@ -17,6 +19,7 @@ public class GamePanel extends JPanel {
 
 	private static final String OVER = "Game Over!";
 	private static final String REPLAY = "R to replay";
+	private static final String HIGHSCORE = "Your Highest Score was: ";
 	private SIGame game;
 
 	// EFFECTS:  sets size and background colour of panel,
@@ -117,8 +120,9 @@ public class GamePanel extends JPanel {
 		g.setColor(new Color( 0, 0, 0));
 		g.setFont(new Font("Arial", 20, 20));
 		FontMetrics fm = g.getFontMetrics();
-		centreString(OVER, g, fm, SIGame.HEIGHT / 2);
-		centreString(REPLAY, g, fm, SIGame.HEIGHT / 2 + 50);
+		centreString(OVER, g, fm, SIGame.HEIGHT / 2 - 50);
+		centreString(REPLAY, g, fm, SIGame.HEIGHT / 2);
+		centreString(HIGHSCORE + currentHighScore, g, fm, SIGame.HEIGHT / 2 + 50);
 		g.setColor(saved);
 	}
 

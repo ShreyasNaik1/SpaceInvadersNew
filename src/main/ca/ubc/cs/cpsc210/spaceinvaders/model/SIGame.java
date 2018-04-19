@@ -20,11 +20,14 @@ public class SIGame {
 	private Tank tank;
 	private boolean isGameOver;
 	private int numInvadersDestroyed;
+	private int count;
+	private final int LIVES = 5;
+    private int livesLost;
 
-	// EFFECTS:  creates empty lists of missiles and invaders, centres tank on screen
+    // EFFECTS:  creates empty lists of missiles and invaders, centres tank on screen
 	public SIGame() {
-		missiles = new ArrayList<Missile>();
-		invaders = new ArrayList<Invader>();
+		missiles = new ArrayList<>();
+		invaders = new ArrayList<>();
 		setUp();
 	}
 
@@ -45,40 +48,65 @@ public class SIGame {
 	// EFFECTS:  turns tank, fires missiles and resets game in response to
 	//           given key pressed code
 	public void keyPressed(int keyCode) {
+
+        if (keyCode == KeyEvent.VK_X && count == 1)
+            System.exit(0);
+
 		if (keyCode == KeyEvent.VK_SPACE)
 			fireMissile();
-		else if (keyCode == KeyEvent.VK_R && isGameOver)
-			setUp();
-		else if (keyCode == KeyEvent.VK_X)
-			System.exit(0);
+		else if (keyCode == KeyEvent.VK_R && isGameOver) {
+            setUp();
+        }
+		else if (keyCode == KeyEvent.VK_X) {
+            count = count + 1;
+            isGameOver = true;
+        }
 		else
 			tankControl(keyCode);
 	}
+
+    // MODIFIES: this
+    // EFFECTS:  stops moving tank once key is released
+    public void keyReleased(int keyCode) {
+        if (keyCode == KeyEvent.VK_KP_LEFT || keyCode == KeyEvent.VK_LEFT)
+            tank.direction = 0;
+        else if (keyCode == KeyEvent.VK_KP_RIGHT || keyCode == KeyEvent.VK_RIGHT)
+            tank.direction = 0;
+    }
 	
-	// Exercise: fill in the documentation for this method
+	// EFFECTS:  quits the game -- NOTE: Does not switch game off
 	public boolean isOver() {
 		return isGameOver;
 	}
-	
+
+	//EFFECTS: returns number of missiles left
 	public int getNumMissiles() {
 		return missiles.size();
 	}
-	
+
+    //EFFECTS: returns number of invaders destroyed
 	public int getNumInvadersDestroyed() {
 		return numInvadersDestroyed;
 	}
-	
+
+    //EFFECTS: returns the list of Invaders
 	public List<Invader> getInvaders() {
 		return invaders;
 	}
-	
+
+    //EFFECTS: returns the list of Missiles
 	public List<Missile> getMissiles() {
 		return missiles;
 	}
-	
+
+    //EFFECTS: returns tank
 	public Tank getTank() {
 		return tank;
 	}
+
+	public int getLives() {
+	    return LIVES - livesLost;
+    }
 
 	// MODIFIES: this
 	// EFFECTS:  clears list of missiles and invaders, initializes tank
@@ -88,6 +116,8 @@ public class SIGame {
 		tank = new Tank(WIDTH / 2);
 		isGameOver = false;
 		numInvadersDestroyed = 0;
+		count = 0;
+		livesLost = 0;
 	}
 
 	// MODIFIES: this
@@ -139,7 +169,8 @@ public class SIGame {
 		missiles.removeAll(missilesToRemove);
 	}
 	
-	// Exercise: add the documentation for this method
+	// MODIFIES: this
+    // EFFECTS: adds a new invader at INVASION_PERIOD intervals
 	private void invade() {
 		if (RND.nextInt(INVASION_PERIOD) < 1) {
 			Invader i = new Invader(RND.nextInt(SIGame.WIDTH), 0);
@@ -164,7 +195,9 @@ public class SIGame {
 		missiles.removeAll(missilesToRemove);
 	}
 	
-	// Exercise:  fill in the documentation for this method
+	// MODIFIES: this
+    // EFFECTS:  if missile collides with invader, increase number of,
+    //           destroyed invaders, add missile to new list of Missiles.
 	private boolean checkInvaderHit(Invader target, List<Missile> missilesToRemove) {
 		for (Missile next : missiles) {
 			if (target.collidedWith(next)) {
@@ -183,6 +216,9 @@ public class SIGame {
 	private void checkGameOver() {
 		for (Invader next : invaders) {
 			if (next.getY() > HEIGHT) {
+				livesLost++;
+			}
+			if ((LIVES - livesLost) == 0) {
 				isGameOver = true;
 			}
 		}
