@@ -52,6 +52,9 @@ public class SIGame {
         if (keyCode == KeyEvent.VK_X && count == 1)
             System.exit(0);
 
+        if (keyCode == KeyEvent.VK_X && isGameOver)
+            System.exit(0);
+
 		if (keyCode == KeyEvent.VK_SPACE)
 			fireMissile();
 		else if (keyCode == KeyEvent.VK_R && isGameOver) {
@@ -60,6 +63,8 @@ public class SIGame {
 		else if (keyCode == KeyEvent.VK_X) {
             count = count + 1;
             isGameOver = true;
+        } else if (keyCode == KeyEvent.VK_P) {
+
         }
 		else
 			tankControl(keyCode);
@@ -68,10 +73,14 @@ public class SIGame {
     // MODIFIES: this
     // EFFECTS:  stops moving tank once key is released
     public void keyReleased(int keyCode) {
-        if (keyCode == KeyEvent.VK_KP_LEFT || keyCode == KeyEvent.VK_LEFT)
+        if (keyCode == KeyEvent.VK_KP_LEFT || keyCode == KeyEvent.VK_LEFT) {
             tank.direction = 0;
-        else if (keyCode == KeyEvent.VK_KP_RIGHT || keyCode == KeyEvent.VK_RIGHT)
+            tank.rightOrLeft = false;
+        }
+        else if (keyCode == KeyEvent.VK_KP_RIGHT || keyCode == KeyEvent.VK_RIGHT) {
             tank.direction = 0;
+            tank.rightOrLeft = true;
+        }
     }
 	
 	// EFFECTS:  quits the game -- NOTE: Does not switch game off

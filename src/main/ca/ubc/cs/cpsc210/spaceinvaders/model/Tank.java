@@ -14,6 +14,7 @@ public class Tank {
 	public static final int Y_POS = SIGame.HEIGHT - 40;
 	public static final Color COLOR = new Color(250, 128, 20);
 	public int direction;
+	public boolean rightOrLeft;
 
 
 	// EFFECTS: places tank at position (x, Y_POS) moving right.
@@ -27,19 +28,21 @@ public class Tank {
 
 	// EFFECTS: returns true if tank is facing right, false otherwise
 	public boolean isFacingRight() {
-		return direction == 1;
+		return rightOrLeft;
 	}
 
 	// MODIFIES: this
 	// EFFECTS: tank is facing right
 	public void faceRight() {
 		direction  = 1;
+		rightOrLeft = true;
 	}
 
 	// MODIFIES: this
 	// EFFECTS: tank is facing left
 	public void faceLeft() {
 		direction = -1;
+		rightOrLeft = false;
 	}
 
 	// MODIFIES: this
