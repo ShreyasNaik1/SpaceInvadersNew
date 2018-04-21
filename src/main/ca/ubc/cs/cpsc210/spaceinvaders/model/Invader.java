@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 /*
  * Represents a space invader.
  */
-public class Invader extends SIGame{
+public class Invader {
 	
 	public static final int SIZE_X = 15;
 	public static final int SIZE_Y = 9;

@@ -5,7 +5,7 @@ import java.awt.Color;
 /*
  * Represents a missile.
  */
-public class Missile extends SIGame{
+public class Missile {
 
 	public static final int SIZE_X = 5;
 	public static final int SIZE_Y = 9;

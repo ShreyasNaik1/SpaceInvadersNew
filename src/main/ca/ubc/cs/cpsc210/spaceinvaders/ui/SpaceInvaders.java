@@ -13,6 +13,8 @@ import javax.swing.Timer;
 
 import ca.ubc.cs.cpsc210.spaceinvaders.model.SIGame;
 
+import static java.awt.Event.PAUSE;
+
 /*
  * Represents the main window in which the space invaders
  * game is played
@@ -21,18 +23,17 @@ import ca.ubc.cs.cpsc210.spaceinvaders.model.SIGame;
 public class SpaceInvaders extends JFrame {
 
 	private static final int INTERVAL = 20;
-	private SIGame game;
 	private GamePanel gp;
 	private ScorePanel sp;
+
 
 	// EFFECTS: sets up window in which Space Invaders game will be played
 	public SpaceInvaders() {
 		super("Space Invaders");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
-		game = new SIGame();
-		gp = new GamePanel(game);
-		sp = new ScorePanel(game);
+		gp = new GamePanel(SIGame.getInstance());
+		sp = new ScorePanel(SIGame.getInstance());
 		add(gp);
 		add(sp, BorderLayout.NORTH);
 		addKeyListener(new KeyHandler());
@@ -49,9 +50,9 @@ public class SpaceInvaders extends JFrame {
         Timer t = new Timer(INTERVAL, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (!game.isOver()) {
-                    game.update();
-                    sp.update();
+                if (!SIGame.getInstance().isOver()) {
+                	SIGame.getInstance().update();
+                	sp.update();
                 }
                 gp.repaint();
             }
@@ -73,12 +74,12 @@ public class SpaceInvaders extends JFrame {
 	private class KeyHandler extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent e) {
-			game.keyPressed(e.getKeyCode());
+			SIGame.getInstance().keyPressed(e.getKeyCode());
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			game.keyReleased(e.getKeyCode());
+			SIGame.getInstance().keyReleased(e.getKeyCode());
 		}
 }
 

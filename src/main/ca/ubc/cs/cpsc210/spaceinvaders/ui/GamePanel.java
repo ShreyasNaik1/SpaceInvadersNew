@@ -20,14 +20,12 @@ public class GamePanel extends JPanel {
 	private static final String OVER = "Game Over!";
 	private static final String REPLAY = "R to replay";
 	private static final String HIGHSCORE = "Your Highest Score was: ";
-	private SIGame game;
 
 	// EFFECTS:  sets size and background colour of panel,
 	//           updates this with the game to be displayed
 	public GamePanel(SIGame g) {
 		setPreferredSize(new Dimension(SIGame.WIDTH, SIGame.HEIGHT));
 		setBackground(Color.GRAY);
-		this.game = g;
 	}
 	
 	@Override
@@ -36,7 +34,7 @@ public class GamePanel extends JPanel {
 		
 		drawGame(g);
 		
-		if (game.isOver()) {
+		if (SIGame.getInstance().isOver()) {
 			gameOver(g);
 		}
 	}
@@ -52,7 +50,7 @@ public class GamePanel extends JPanel {
     // MODIFIES: g
     // EFFECTS:  draws the tank onto g
     private void drawTank(Graphics g) {
-        Tank t = game.getTank();
+        Tank t = SIGame.getInstance().getTank();
         Color savedCol = g.getColor();
         g.setColor(Tank.COLOR);
         g.fillRect(t.getX() - Tank.SIZE_X / 2, Tank.Y_POS - Tank.SIZE_Y / 2, Tank.SIZE_X, Tank.SIZE_Y);
@@ -82,7 +80,7 @@ public class GamePanel extends JPanel {
 	// MODIFIES: g
 	// EFFECTS:  draws the invaders onto g
 	private void drawInvaders(Graphics g) {
-		for(Invader next : game.getInvaders()) {
+		for(Invader next : SIGame.getInstance().getInvaders()) {
 			drawInvader(g, next);
 		}
 	}
@@ -99,7 +97,7 @@ public class GamePanel extends JPanel {
 	// MODIFIES: g
 	// EFFECTS:  draws the missiles onto g
 	private void drawMissiles(Graphics g) {
-		for(Missile next : game.getMissiles()) {
+		for(Missile next : SIGame.getInstance().getMissiles()) {
 			drawMissile(g, next);
 		}
 	}

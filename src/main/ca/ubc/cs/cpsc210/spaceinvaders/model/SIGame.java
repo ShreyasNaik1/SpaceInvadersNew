@@ -13,23 +13,33 @@ public class SIGame {
 	public static final int HEIGHT = 600;
 	public static final int MAX_MISSILES = 10;
 	public static final Random RND = new Random();
-	private static final int INVASION_PERIOD = 250;   // on average, one invader each 250 updates
 
-	private List<Missile> missiles;
-	private List<Invader> invaders;
-	private Tank tank;
-	private boolean isGameOver;
-	private int numInvadersDestroyed;
-	private int count;
-	private final int LIVES = 5;
+	private static final int INVASION_PERIOD = 250;   // on average, one invader each 250 updates
+    private static SIGame instance;
+
+    private List<Missile> missiles;
+    private List<Invader> invaders;
+    private Tank tank;
+    private boolean isGameOver;
+    private int numInvadersDestroyed;
+    private int count;
+    private final int LIVES = 5;
     private int livesLost;
 
     // EFFECTS:  creates empty lists of missiles and invaders, centres tank on screen
-	public SIGame() {
+	private SIGame() {
 		missiles = new ArrayList<>();
 		invaders = new ArrayList<>();
 		setUp();
 	}
+
+	public static SIGame getInstance() {
+        if (instance == null) {
+            instance = new SIGame();
+        }
+
+        return instance;
+    }
 
 	// MODIFIES: this
 	// EFFECTS:  updates tank, missiles and invaders
@@ -49,23 +59,22 @@ public class SIGame {
 	//           given key pressed code
 	public void keyPressed(int keyCode) {
 
-        if (keyCode == KeyEvent.VK_X && count == 1)
-            System.exit(0);
+		if (keyCode == KeyEvent.VK_X && count == 1)
+			System.exit(0);
 
-        if (keyCode == KeyEvent.VK_X && isGameOver)
-            System.exit(0);
+		if (keyCode == KeyEvent.VK_SPACE && count == 1) {
+			count = 0;
+			isGameOver = false;
+		}
 
-		if (keyCode == KeyEvent.VK_SPACE)
+		if (keyCode == KeyEvent.VK_SPACE) {
 			fireMissile();
-		else if (keyCode == KeyEvent.VK_R && isGameOver) {
+		} else if (keyCode == KeyEvent.VK_R && isGameOver) {
             setUp();
-        }
-		else if (keyCode == KeyEvent.VK_X) {
+        } else if (keyCode == KeyEvent.VK_X) {
             count = count + 1;
             isGameOver = true;
-        } else if (keyCode == KeyEvent.VK_P) {
-
-        }
+		}
 		else
 			tankControl(keyCode);
 	}
